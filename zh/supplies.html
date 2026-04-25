@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>酒店用品 - Linverge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        /* ===== SERVICE PILLARS ===== */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .service-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--tech));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .service-card:hover {
+            box-shadow: 0 16px 48px var(--shadow-hover);
+            transform: translateY(-6px);
+            border-color: transparent;
+        }
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        .service-icon {
+            width: 64px; height: 64px;
+            background: var(--tech-soft);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        .service-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            line-height: 1.35;
+        }
+        .service-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== SUPPLY CATEGORIES ===== */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .cat-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .cat-card:hover {
+            box-shadow: 0 12px 40px var(--shadow-hover);
+            transform: translateY(-4px);
+            border-color: transparent;
+        }
+        .cat-icon {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .cat-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .cat-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== KEY ADVANTAGES ===== */
+        .adv-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .adv-card {
+            padding: 36px 28px;
+            background: var(--bg-light);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .adv-card:hover {
+            box-shadow: 0 12px 40px var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        .adv-card .adv-num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .adv-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .adv-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== DATA HIGHLIGHTS ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .data-card {
+            text-align: center;
+            padding: 32px 20px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        .data-card:hover {
+            box-shadow: 0 8px 30px var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+        .data-card .data-num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .data-card .data-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .service-grid { grid-template-columns: 1fr; }
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .adv-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .cat-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar scrolled" id="navbar">
+        <a href="../index.html" class="nav-logo">Li<span class="accent">n</span>verge</a>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="../digital-linen.html">数字布草</a></li>
+            <li><a href="../supplies.html" class="active">酒店用品</a></li>
+            <li><a href="../about.html">关于我们</a></li>
+            <li><a href="../contact.html">联系我们</a></li>
+            <li><a href="../contact.html" class="nav-cta">获取报价</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>不只是洗涤。我们是您的资产管理专家。</h1>
+            <p>高端布草租赁、专业洗涤和全面的酒店用品供应——一个值得信赖的合作伙伴，满足您的一切需求。</p>
+        </div>
+    </section>
+
+    <!-- SECTION 1: THREE SERVICE PILLARS -->
+    <section class="section">
+        <div class="section-header fade-up">
+            <p class="section-label">我们的服务</p>
+            <h2 class="section-title">酒店所需，一站配齐</h2>
+        </div>
+        <div class="service-grid">
+            <div class="service-card fade-up">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="2"/>
+                        <circle cx="12" cy="14" r="4"/>
+                        <circle cx="12" cy="14" r="1.5"/>
+                        <line x1="12" y1="6" x2="12" y2="10"/>
+                        <line x1="8" y1="6" x2="16" y2="6"/>
+                    </svg>
+                </div>
+                <h3>专业洗涤服务</h3>
+                <p>位于贝尔格莱德的先进设施，采用为高端酒店纺织品优化的洗涤配方，兼顾卫生标准与纤维保护。</p>
+            </div>
+            <div class="service-card fade-up">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 4h20v2H2z"/>
+                        <path d="M2 6l2 14h16l2-14"/>
+                        <path d="M9 10c0 0 1.5 2 3 2s3-2 3-2"/>
+                        <path d="M7 4V2h10v2"/>
+                    </svg>
+                </div>
+                <h3>高端布草租赁</h3>
+                <p>无需前期资金投入即可使用高支数优质布草。我们的RFID追踪租赁池确保您始终拥有充足的库存。</p>
+            </div>
+            <div class="service-card fade-up">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 7h-3a2 2 0 0 1-2-2V2"/>
+                        <path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2H9z"/>
+                        <path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h9.8"/>
+                        <line x1="9" y1="10" x2="15" y2="10"/>
+                        <line x1="9" y1="14" x2="13" y2="14"/>
+                    </svg>
+                </div>
+                <h3>客房用品与消耗品</h3>
+                <p>环保认证客房用品、个性化定制选项和全面的消耗品供应，与新鲜布草一同配送。全球采购确保成本效益和品质稳定。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: SUPPLY CATEGORIES -->
+    <section class="section" style="background: var(--bg-light);">
+        <div class="section-header fade-up">
+            <p class="section-label">产品系列</p>
+            <h2 class="section-title">全品类覆盖</h2>
+        </div>
+        <div class="cat-grid">
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 4h20v2H2z"/>
+                        <path d="M2 6l2 14h16l2-14"/>
+                        <path d="M7 4V2h10v2"/>
+                        <path d="M12 11v5"/>
+                        <path d="M9 14h6"/>
+                    </svg>
+                </div>
+                <h3>床品与毛巾</h3>
+                <p>床单、枕套、被套、浴巾、手巾、地巾</p>
+            </div>
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h3>客房用品</h3>
+                <p>拖鞋、牙具套装、针线包、化妆包、鞋擦</p>
+            </div>
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3>洗浴与个人护理</h3>
+                <p>洗发水、护发素、沐浴露、润肤露、香皂</p>
+            </div>
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <path d="M3 9h18"/>
+                        <path d="M9 3v18"/>
+                    </svg>
+                </div>
+                <h3>客房配件</h3>
+                <p>装饰品、托盘、纸巾盒、垃圾桶、衣架</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: KEY ADVANTAGES -->
+    <section class="section">
+        <div class="section-header fade-up">
+            <p class="section-label">为什么选择Linverge</p>
+            <h2 class="section-title">酒店选择我们的三大理由</h2>
+        </div>
+        <div class="adv-grid">
+            <div class="adv-card fade-up">
+                <div class="adv-num">01</div>
+                <h3>全球采购，欧盟标准</h3>
+                <p>我们全球采购并执行欧盟进口质量标准。品质更优、价格更低，优于分散的本地采购。</p>
+            </div>
+            <div class="adv-card fade-up">
+                <div class="adv-num">02</div>
+                <h3>智能库存管理</h3>
+                <p>我们的系统追踪消耗模式，在库存不足前自动发送补货提醒。</p>
+            </div>
+            <div class="adv-card fade-up">
+                <div class="adv-num">03</div>
+                <h3>品牌定制</h3>
+                <p>Logo刺绣、定制包装、品牌洗护用品。将日常用品转化为品牌触点。</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: DATA HIGHLIGHTS -->
+    <section class="section" style="background: var(--bg-light);">
+        <div class="data-grid">
+            <div class="data-card fade-up">
+                <div class="data-num">-80%</div>
+                <div class="data-label">采购管理成本</div>
+            </div>
+            <div class="data-card fade-up">
+                <div class="data-num">15-20%</div>
+                <div class="data-label">整体采购成本降低</div>
+            </div>
+            <div class="data-card fade-up">
+                <div class="data-num">-60%</div>
+                <div class="data-label">缺货率</div>
+            </div>
+            <div class="data-card fade-up">
+                <div class="data-num">99%+</div>
+                <div class="data-label">质量合格率</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CTA -->
+    <section class="cta-section">
+        <h2 class="fade-up">获取定制供应方案</h2>
+        <p class="fade-up">告诉我们您的酒店信息，我们将在48小时内为您准备定制产品清单和报价。</p>
+        <a href="../contact.html" class="cta-btn fade-up">
+            获取定制报价
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">Li<span class="accent">n</span>verge</div>
+                <p>巴尔干地区首个全面整合、基于RFID驱动的数字布草管理与采购生态系统，专为高端酒店业打造。</p>
+            </div>
+            <div class="footer-col">
+                <h4>业务</h4>
+                <a href="../digital-linen.html">数字布草</a>
+                <a href="../supplies.html">酒店用品</a>
+                <a href="../digital-linen.html">RFID追踪</a>
+                <a href="../dashboard.html">数据看板</a>
+            </div>
+            <div class="footer-col">
+                <h4>公司</h4>
+                <a href="../about.html">关于我们</a>
+                <a href="../about.html">团队</a>
+                <a href="../about.html">新闻</a>
+                <a href="../about.html">招聘</a>
+            </div>
+            <div class="footer-col">
+                <h4>联系方式</h4>
+                <a href="mailto:info@linverge.com">info@linverge.com</a>
+                <a href="tel:+381112345678">+381 11 234 5678</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p><a href="../supplies.html" class="footer-copyright-link">&copy; 2026 Linverge. All rights reserved.</a></p>
+            <p>塞尔维亚贝尔格莱德</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

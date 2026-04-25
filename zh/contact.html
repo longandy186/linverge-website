@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - Linverge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .page-hero {
+            position: relative;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('../hero-bg.jpg') center/cover no-repeat;
+            opacity: 0.08;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 22, 40, 0.6) 0%, rgba(10, 22, 40, 0.8) 100%);
+            z-index: 1;
+        }
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 640px;
+            padding: 0 24px;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            text-wrap: balance;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .page-hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.7;
+        }
+
+        /* Contact grid */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 64px;
+            align-items: start;
+        }
+
+        /* Form */
+        .form-group {
+            margin-bottom: 24px;
+        }
+        .form-group label {
+            display: block;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            font-size: 15px;
+            font-family: 'Open Sans', sans-serif;
+            color: var(--text-primary);
+            background: #fff;
+            transition: var(--transition);
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--tech);
+            box-shadow: 0 0 0 3px rgba(46,204,113,0.1);
+        }
+        .form-group textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .form-submit {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--tech);
+            color: var(--primary-dark);
+            padding: 16px 40px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            font-family: 'Open Sans', sans-serif;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        .form-submit:hover {
+            background: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(46, 204, 113, 0.35);
+        }
+
+        /* Contact info */
+        .contact-info {
+            padding: 40px;
+            background: var(--mint-white);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+        .contact-info h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 28px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .info-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .info-icon {
+            width: 44px; height: 44px;
+            background: rgba(46,204,113,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        .info-item h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .info-item p,
+        .info-item a {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            text-decoration: none;
+        }
+        .info-item a:hover { color: var(--tech); }
+
+        /* Map placeholder */
+        .map-area {
+            margin-top: 40px;
+            height: 200px;
+            background: linear-gradient(135deg, #e8eceb, #dde4e1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        @media (max-width: 1024px) {
+            .contact-grid { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+            .page-hero h1 { font-size: 32px; }
+        }
+        @media (max-width: 768px) {
+            .page-hero { height: 340px; }
+            .page-hero h1 { font-size: 28px; }
+            .contact-info { padding: 28px 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar scrolled" id="navbar">
+        <a href="../index.html" class="nav-logo">Li<span class="accent">n</span>verge</a>
+        <ul class="nav-links">
+            <li><a href="../index.html">首页</a></li>
+            <li><a href="../digital-linen.html">数字布草</a></li>
+            <li><a href="../supplies.html">酒店用品</a></li>
+            <li><a href="../about.html">关于我们</a></li>
+            <li><a href="contact.html" class="active">联系我们</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>联系我们</h1>
+            <p>无论您需要演示、报价，还是只是有问题想咨询，我们随时为您服务。</p>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section class="section">
+        <div class="contact-grid">
+            <div class="contact-form fade-up">
+                <form action="#" method="POST">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="name">姓名</label>
+                            <input type="text" id="name" name="name" placeholder="您的姓名" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="company">酒店/公司</label>
+                            <input type="text" id="company" name="company" placeholder="酒店名称">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">邮箱</label>
+                            <input type="email" id="email" name="email" placeholder="you@hotel.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">电话</label>
+                            <input type="tel" id="phone" name="phone" placeholder="+381 ...">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="interest">我感兴趣的是</label>
+                        <select id="interest" name="interest">
+                            <option value="">请选择</option>
+                            <option value="digital-linen">数字布草管理</option>
+                            <option value="supplies">酒店用品</option>
+                            <option value="both">两者都有</option>
+                            <option value="partnership">合作洽谈</option>
+                            <option value="other">其他</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">留言</label>
+                        <textarea id="message" name="message" placeholder="请告诉我们您的酒店信息以及您的需求..."></textarea>
+                    </div>
+                    <button type="submit" class="form-submit">
+                        发送消息
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    </button>
+                </form>
+            </div>
+            <div class="contact-info fade-up">
+                <h3>联系方式</h3>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tech)" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </div>
+                    <div>
+                        <h4>邮箱</h4>
+                        <a href="mailto:info@linverge.com">info@linverge.com</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tech)" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+                    </div>
+                    <div>
+                        <h4>电话</h4>
+                        <a href="tel:+381112345678">+381 11 234 5678</a>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tech)" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                    </div>
+                    <div>
+                        <h4>办公室</h4>
+                        <p>Kneza Milosa 25, 11000<br>贝尔格莱德，塞尔维亚</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--tech)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+                    </div>
+                    <div>
+                        <h4>营业时间</h4>
+                        <p>周一至周五：09:00 - 18:00<br>周六：10:00 - 14:00</p>
+                    </div>
+                </div>
+                <div class="map-area">
+                    <span>Google 地图 &mdash; 贝尔格莱德办公室</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">Li<span class="accent">n</span>verge</div>
+                <p>Where Linen Meets Innovation<br>Belgrade, Serbia</p>
+            </div>
+            <div class="footer-col">
+                <h4>业务</h4>
+                <a href="../digital-linen.html">数字布草</a>
+                <a href="../supplies.html">酒店用品</a>
+                <a href="../digital-linen.html">RFID 追踪</a>
+                <a href="../dashboard.html">数据看板</a>
+            </div>
+            <div class="footer-col">
+                <h4>公司</h4>
+                <a href="../about.html">关于我们</a>
+                <a href="../about.html">团队</a>
+                <a href="../about.html">新闻</a>
+                <a href="../about.html">招聘</a>
+            </div>
+            <div class="footer-col">
+                <h4>联系方式</h4>
+                <a href="mailto:info@linverge.com">info@linverge.com</a>
+                <a href="tel:+381112345678">+381 11 234 5678</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p><a href="../contact.html" class="footer-copyright-link">&copy; 2026 Linverge. All rights reserved.</a></p>
+            <p>Belgrade, Serbia</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

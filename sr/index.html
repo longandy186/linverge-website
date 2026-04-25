@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linverge - Uskoro</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/common.css">
+    <style>
+        .coming-soon {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 24px;
+            background: linear-gradient(135deg, #003570, #004A99);
+        }
+        .coming-soon .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 56px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 40px;
+        }
+        .coming-soon .logo .accent { color: #2ECC71; }
+        .coming-soon h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+        }
+        .coming-soon p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 40px;
+            max-width: 480px;
+            line-height: 1.7;
+        }
+        .coming-soon .back-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: #2ECC71;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 600;
+            border: 1px solid rgba(46,204,113,0.3);
+            padding: 14px 32px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+        .coming-soon .back-link:hover {
+            background: rgba(46,204,113,0.1);
+            border-color: rgba(46,204,113,0.5);
+        }
+        .lang-nav {
+            position: fixed;
+            top: 24px;
+            right: 24px;
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .lang-nav a {
+            color: rgba(255,255,255,0.5);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .lang-nav a:hover,
+        .lang-nav a.active {
+            color: #2ECC71;
+            background: rgba(46,204,113,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="lang-nav">
+        <a href="../index.html">EN</a>
+        <a href="index.html" class="active">SR</a>
+    </div>
+    <div class="coming-soon">
+        <div class="logo">Li<span class="accent">n</span>verge</div>
+        <h1>Uskoro dostupno</h1>
+        <p>Srpska verzija sajta je u pripremi. U međuvremenu, posetite našu englesku verziju.</p>
+        <a href="../index.html" class="back-link">
+            ← English Version
+        </a>
+    </div>
+</body>
+</html>

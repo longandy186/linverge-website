@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hotel Supplies - Linverge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        /* ===== SERVICE PILLARS ===== */
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .service-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--tech));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+        .service-card:hover {
+            box-shadow: 0 16px 48px var(--shadow-hover);
+            transform: translateY(-6px);
+            border-color: transparent;
+        }
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+        .service-icon {
+            width: 64px; height: 64px;
+            background: var(--tech-soft);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+        }
+        .service-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            line-height: 1.35;
+        }
+        .service-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== SUPPLY CATEGORIES ===== */
+        .cat-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .cat-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .cat-card:hover {
+            box-shadow: 0 12px 40px var(--shadow-hover);
+            transform: translateY(-4px);
+            border-color: transparent;
+        }
+        .cat-icon {
+            width: 56px; height: 56px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .cat-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 17px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .cat-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== KEY ADVANTAGES ===== */
+        .adv-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .adv-card {
+            padding: 36px 28px;
+            background: var(--bg-light);
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+        .adv-card:hover {
+            box-shadow: 0 12px 40px var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        .adv-card .adv-num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .adv-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .adv-card p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== DATA HIGHLIGHTS ===== */
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+        .data-card {
+            text-align: center;
+            padding: 32px 20px;
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            transition: var(--transition);
+        }
+        .data-card:hover {
+            box-shadow: 0 8px 30px var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+        .data-card .data-num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .data-card .data-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .service-grid { grid-template-columns: 1fr; }
+            .cat-grid { grid-template-columns: repeat(2, 1fr); }
+            .adv-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .cat-grid { grid-template-columns: 1fr; }
+            .data-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar scrolled" id="navbar">
+        <a href="index.html" class="nav-logo">Li<span class="accent">n</span>verge</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="digital-linen.html">Digital Linen</a></li>
+            <li><a href="supplies.html" class="active">Supplies</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="lang-switch">
+                <a href="supplies.html" class="active">EN</a>
+                <a href="sr/supplies.html">SR</a>
+            </li>
+            <li><a href="contact.html" class="nav-cta">Get Quote</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Beyond Washing. We Are Your Asset Managers.</h1>
+            <p>Premium linen leasing, professional care, and comprehensive hospitality supplies &mdash; all from one trusted partner.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 1: THREE SERVICE PILLARS -->
+    <section class="section">
+        <div class="section-header fade-up">
+            <p class="section-label">Our Services</p>
+            <h2 class="section-title">Everything Your Hotel Needs, Under One Roof</h2>
+        </div>
+        <div class="service-grid">
+            <div class="service-card fade-up">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="2" y="2" width="20" height="20" rx="2"/>
+                        <circle cx="12" cy="14" r="4"/>
+                        <circle cx="12" cy="14" r="1.5"/>
+                        <line x1="12" y1="6" x2="12" y2="10"/>
+                        <line x1="8" y1="6" x2="16" y2="6"/>
+                    </svg>
+                </div>
+                <h3>Professional Wash Services</h3>
+                <p>State-of-the-art facility in Belgrade using optimized wash formulas for high-end hospitality textiles. Prioritizing both hygiene standards and fiber preservation.</p>
+            </div>
+            <div class="service-card fade-up">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 4h20v2H2z"/>
+                        <path d="M2 6l2 14h16l2-14"/>
+                        <path d="M9 10c0 0 1.5 2 3 2s3-2 3-2"/>
+                        <path d="M7 4V2h10v2"/>
+                    </svg>
+                </div>
+                <h3>Premium Linen Leasing</h3>
+                <p>Access premium, high-thread-count linens without the upfront capital investment. Our RFID-tracked leasing pool ensures you always have the stock you need.</p>
+            </div>
+            <div class="service-card fade-up">
+                <div class="service-icon">
+                    <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20 7h-3a2 2 0 0 1-2-2V2"/>
+                        <path d="M9 18a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h7l4 4v10a2 2 0 0 1-2 2H9z"/>
+                        <path d="M3 7.6v12.8A1.6 1.6 0 0 0 4.6 22h9.8"/>
+                        <line x1="9" y1="10" x2="15" y2="10"/>
+                        <line x1="9" y1="14" x2="13" y2="14"/>
+                    </svg>
+                </div>
+                <h3>Guest Amenities &amp; Consumables</h3>
+                <p>Eco-certified guest room amenities, personalized options, and comprehensive consumables supply, all delivered alongside your fresh linen. Global sourcing ensures cost-efficiency and stable quality.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: SUPPLY CATEGORIES -->
+    <section class="section" style="background: var(--bg-light);">
+        <div class="section-header fade-up">
+            <p class="section-label">Product Range</p>
+            <h2 class="section-title">Full Category Coverage</h2>
+        </div>
+        <div class="cat-grid">
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M2 4h20v2H2z"/>
+                        <path d="M2 6l2 14h16l2-14"/>
+                        <path d="M7 4V2h10v2"/>
+                        <path d="M12 11v5"/>
+                        <path d="M9 14h6"/>
+                    </svg>
+                </div>
+                <h3>Bed Linen &amp; Towels</h3>
+                <p>Sheets, pillowcases, duvet covers, bath towels, hand towels, bath mats</p>
+            </div>
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                        <path d="M2 17l10 5 10-5"/>
+                        <path d="M2 12l10 5 10-5"/>
+                    </svg>
+                </div>
+                <h3>Room Amenities</h3>
+                <p>Slippers, dental kits, sewing kits, vanity kits, shoe shine</p>
+            </div>
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                        <path d="M9 12l2 2 4-4"/>
+                    </svg>
+                </div>
+                <h3>Bath &amp; Personal Care</h3>
+                <p>Shampoo, conditioner, body wash, lotion, soap bars</p>
+            </div>
+            <div class="cat-card fade-up">
+                <div class="cat-icon">
+                    <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2"/>
+                        <path d="M3 9h18"/>
+                        <path d="M9 3v18"/>
+                    </svg>
+                </div>
+                <h3>Room Accessories</h3>
+                <p>Decor items, trays, tissue boxes, trash bins, hangers</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: KEY ADVANTAGES -->
+    <section class="section">
+        <div class="section-header fade-up">
+            <p class="section-label">Why Linverge</p>
+            <h2 class="section-title">Three Reasons Hotels Switch to Us</h2>
+        </div>
+        <div class="adv-grid">
+            <div class="adv-card fade-up">
+                <div class="adv-num">01</div>
+                <h3>Global Sourcing, EU Standards</h3>
+                <p>We source globally and apply EU import quality standards. Better quality at lower prices than scattered local purchasing.</p>
+            </div>
+            <div class="adv-card fade-up">
+                <div class="adv-num">02</div>
+                <h3>Smart Inventory Management</h3>
+                <p>Our system tracks consumption patterns and sends automatic replenishment alerts before you run low.</p>
+            </div>
+            <div class="adv-card fade-up">
+                <div class="adv-num">03</div>
+                <h3>Brand Customization</h3>
+                <p>Logo embroidery, custom packaging, branded toiletries. Turn everyday items into brand touchpoints.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: DATA HIGHLIGHTS -->
+    <section class="section" style="background: var(--bg-light);">
+        <div class="data-grid">
+            <div class="data-card fade-up">
+                <div class="data-num">-80%</div>
+                <div class="data-label">Procurement management cost</div>
+            </div>
+            <div class="data-card fade-up">
+                <div class="data-num">15-20%</div>
+                <div class="data-label">Overall procurement cost reduction</div>
+            </div>
+            <div class="data-card fade-up">
+                <div class="data-num">-60%</div>
+                <div class="data-label">Stockout rate</div>
+            </div>
+            <div class="data-card fade-up">
+                <div class="data-num">99%+</div>
+                <div class="data-label">Quality pass rate</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CTA -->
+    <section class="cta-section">
+        <h2 class="fade-up">Get a custom supply proposal</h2>
+        <p class="fade-up">Tell us about your hotel and we'll prepare a tailored product list and pricing within 48 hours.</p>
+        <a href="contact.html" class="cta-btn fade-up">
+            Get Custom Quote
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">Li<span class="accent">n</span>verge</div>
+                <p>The Balkans' first fully integrated, RFID-driven digital linen management and sourcing ecosystem for premium hospitality.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Business</h4>
+                <a href="digital-linen.html">Digital Linen</a>
+                <a href="supplies.html">Supplies</a>
+                <a href="digital-linen.html">RFID Tracking</a>
+                <a href="dashboard.html">Dashboard</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="about.html">About Us</a>
+                <a href="about.html">Team</a>
+                <a href="about.html">News</a>
+                <a href="about.html">Careers</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:info@linverge.com">info@linverge.com</a>
+                <a href="tel:+381112345678">+381 11 234 5678</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p><a href="zh/supplies.html" class="footer-copyright-link">&copy; 2026 Linverge. All rights reserved.</a></p>
+            <p>Belgrade, Serbia</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

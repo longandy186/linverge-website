@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Linen Management - Linverge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        /* ===== Page Hero ===== */
+        .page-hero {
+            position: relative;
+            height: 520px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('hero-bg.jpg') center/cover no-repeat;
+            opacity: 0.08;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 53, 112, 0.5) 0%, rgba(0, 74, 153, 0.7) 100%);
+            z-index: 1;
+        }
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 720px;
+            padding: 0 24px;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            line-height: 1.2;
+            text-wrap: balance;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .page-hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.7;
+        }
+
+        /* ===== Steps Grid (4 columns) ===== */
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 36px;
+            position: relative;
+        }
+        .steps-grid::before {
+            content: '';
+            position: absolute;
+            top: 36px;
+            left: 12%;
+            right: 12%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--border), var(--primary), var(--tech), var(--primary), var(--border));
+            z-index: 0;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .step-icon {
+            width: 72px;
+            height: 72px;
+            background: #fff;
+            border: 3px solid var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary);
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+        }
+        .step:hover .step-icon {
+            border-color: var(--tech);
+            color: var(--tech);
+            box-shadow: 0 4px 24px var(--tech-glow);
+        }
+        .step h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text-primary);
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .step p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* ===== Compare Grid (Before vs After) ===== */
+        .compare-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 60px var(--shadow-hover);
+        }
+        .compare-traditional,
+        .compare-linverge {
+            padding: 48px 40px;
+        }
+        .compare-traditional {
+            background: linear-gradient(135deg, #fef2f2, #fff5f5);
+            border-right: 1px solid var(--border);
+        }
+        .compare-linverge {
+            background: linear-gradient(135deg, #eff6ff, #f0f7ff);
+        }
+        .compare-column-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            margin-bottom: 28px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid;
+        }
+        .compare-traditional .compare-column-label {
+            color: #dc2626;
+            border-color: #fca5a5;
+        }
+        .compare-linverge .compare-column-label {
+            color: var(--primary);
+            border-color: #93c5fd;
+        }
+        .compare-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            margin-bottom: 24px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+        .compare-row:last-child {
+            margin-bottom: 0;
+        }
+        .compare-row-icon {
+            flex-shrink: 0;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 1px;
+        }
+        .compare-traditional .compare-row-icon {
+            background: rgba(220, 38, 38, 0.1);
+            color: #dc2626;
+        }
+        .compare-linverge .compare-row-icon {
+            background: rgba(0, 74, 153, 0.1);
+            color: var(--primary);
+        }
+        .compare-row-icon svg {
+            width: 14px;
+            height: 14px;
+        }
+        .compare-row-text {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        .compare-traditional .compare-row-text {
+            color: var(--text-secondary);
+        }
+
+        /* ===== RFID Hover Demo ===== */
+        .rfid-demo-section {
+            background: var(--bg-light);
+        }
+        .rfid-demo-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        .rfid-hover {
+            position: relative;
+            cursor: pointer;
+            width: 320px;
+            height: 220px;
+            background: linear-gradient(135deg, #e8ecf0, #d1d8e0);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+            border: 2px solid transparent;
+        }
+        .rfid-hover:hover {
+            border-color: var(--tech);
+            box-shadow: 0 0 30px var(--tech-glow);
+        }
+        .rfid-hover-label {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-muted);
+            user-select: none;
+        }
+        .rfid-hover:hover .rfid-hover-label {
+            color: var(--primary);
+        }
+        .rfid-tooltip {
+            position: absolute;
+            bottom: calc(100% + 16px);
+            left: 50%;
+            transform: translateX(-50%) translateY(8px);
+            background: var(--primary-dark);
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-size: 13px;
+            font-weight: 500;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+            z-index: 10;
+        }
+        .rfid-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 7px solid transparent;
+            border-top-color: var(--primary-dark);
+        }
+        .rfid-hover:hover .rfid-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        .rfid-chip-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--tech);
+            font-size: 13px;
+            font-weight: 600;
+            padding: 8px 18px;
+            background: rgba(46, 204, 113, 0.08);
+            border-radius: 8px;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+            opacity: 0;
+            transform: translateY(6px);
+            transition: all 0.3s ease;
+        }
+        .rfid-hover:hover ~ .rfid-chip-indicator {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .rfid-chip-indicator svg {
+            width: 16px;
+            height: 16px;
+        }
+        .rfid-demo-hint {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .steps-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 32px;
+            }
+            .steps-grid::before {
+                display: none;
+            }
+            .compare-grid {
+                grid-template-columns: 1fr;
+            }
+            .compare-traditional {
+                border-right: none;
+                border-bottom: 1px solid var(--border);
+            }
+            .page-hero h1 { font-size: 32px; }
+        }
+        @media (max-width: 768px) {
+            .page-hero { height: 400px; }
+            .page-hero h1 { font-size: 28px; }
+            .page-hero p { font-size: 16px; }
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .compare-traditional,
+            .compare-linverge {
+                padding: 32px 24px;
+            }
+            .rfid-hover {
+                width: 260px;
+                height: 180px;
+            }
+            .rfid-tooltip {
+                white-space: normal;
+                min-width: 200px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar scrolled" id="navbar">
+        <a href="index.html" class="nav-logo">Li<span class="accent">n</span>verge</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="digital-linen.html" class="active">Digital Linen</a></li>
+            <li><a href="supplies.html">Supplies</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="lang-switch">
+                <a href="digital-linen.html" class="active">EN</a>
+                <a href="sr/digital-linen.html">SR</a>
+            </li>
+            <li><a href="contact.html" class="nav-cta">Request Demo</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Linverge Trace: The Full-Lifecycle RFID Solution</h1>
+            <p>From implant to insight. Know where every piece of linen is, how many times it's been washed, and when it needs replacing.</p>
+        </div>
+    </section>
+
+    <!-- SECTION 1: HOW IT WORKS -->
+    <section class="section">
+        <div class="section-header fade-up">
+            <p class="section-label">How It Works</p>
+            <h2 class="section-title">Four Steps to Full Visibility</h2>
+        </div>
+        <div class="steps-grid">
+            <div class="step fade-up">
+                <div class="step-icon">1</div>
+                <h3>Implant</h3>
+                <p>An industrial-grade, flexible RFID tag is discreetly embedded in each linen item.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-icon">2</div>
+                <h3>Read</h3>
+                <p>Bulk readers at the hotel and wash facility scan hundreds of items in milliseconds&mdash;no manual counting needed.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-icon">3</div>
+                <h3>Track</h3>
+                <p>Our cloud-based software tracks location, wash frequency, and asset history.</p>
+            </div>
+            <div class="step fade-up">
+                <div class="step-icon">4</div>
+                <h3>Analyze</h3>
+                <p>Generate instant reports on inventory levels, loss rates, and linen aging.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2: BEFORE VS AFTER -->
+    <section class="section" style="background: var(--bg-light);">
+        <div class="section-header fade-up">
+            <p class="section-label">The Difference</p>
+            <h2 class="section-title">Traditional vs Linverge</h2>
+        </div>
+        <div class="compare-grid fade-up">
+            <div class="compare-traditional">
+                <div class="compare-column-label">Traditional</div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                    <div class="compare-row-text">Manual counting (3 hrs/day)</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                    <div class="compare-row-text">High loss rates (5%-10%)</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                    <div class="compare-row-text">Supply shocks &amp; stockouts</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                    <div class="compare-row-text">No aging data</div>
+                </div>
+            </div>
+            <div class="compare-linverge">
+                <div class="compare-column-label">Linverge</div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="compare-row-text">Millisecond scanning</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="compare-row-text">Near-zero losses</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="compare-row-text">Precise supply forecasts</div>
+                </div>
+                <div class="compare-row">
+                    <div class="compare-row-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                    <div class="compare-row-text">Full aging history (extend lifespan)</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3: RFID HOVER DEMO -->
+    <section class="section rfid-demo-section">
+        <div class="section-header fade-up">
+            <p class="section-label">Interactive Demo</p>
+            <h2 class="section-title">RFID Hover Demo</h2>
+        </div>
+        <div class="rfid-demo-wrapper fade-up">
+            <div class="rfid-hover">
+                <div class="rfid-tooltip">Washed: 45 times | Location: Laundry facility</div>
+                <span class="rfid-hover-label">Linen Item</span>
+            </div>
+            <div class="rfid-chip-indicator">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="6" y="6" width="12" height="12" rx="2"/>
+                    <line x1="9" y1="1" x2="9" y2="6"/>
+                    <line x1="15" y1="1" x2="15" y2="6"/>
+                    <line x1="9" y1="18" x2="9" y2="23"/>
+                    <line x1="15" y1="18" x2="15" y2="23"/>
+                    <line x1="1" y1="9" x2="6" y2="9"/>
+                    <line x1="1" y1="15" x2="6" y2="15"/>
+                    <line x1="18" y1="9" x2="23" y2="9"/>
+                    <line x1="18" y1="15" x2="23" y2="15"/>
+                    <circle cx="12" cy="12" r="2"/>
+                </svg>
+                RFID Active
+            </div>
+            <p class="rfid-demo-hint">Hover over the linen item to see real-time RFID data</p>
+        </div>
+    </section>
+
+    <!-- SECTION 4: KEY METRICS -->
+    <section class="section">
+        <div class="section-header fade-up">
+            <p class="section-label">Impact</p>
+            <h2 class="section-title">Key Metrics</h2>
+        </div>
+        <div class="metrics-grid fade-up">
+            <div class="metric-card">
+                <div class="metric-number">+<span class="counter" data-target="90">0</span>%</div>
+                <div class="metric-label">Counting efficiency</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number">-<span class="counter" data-target="40">0</span>%</div>
+                <div class="metric-label">Linen loss rate</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-number">-<span class="counter" data-target="30">0</span>%</div>
+                <div class="metric-label">Inventory cost</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: CTA -->
+    <section class="cta-section">
+        <h2 class="fade-up">See it in action at your hotel</h2>
+        <p class="fade-up">Schedule a free on-site demo. We'll show you the dashboard, explain the technology, and answer all your questions.</p>
+        <a href="contact.html" class="cta-btn fade-up">
+            Request Demo
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">Li<span class="accent">n</span>verge</div>
+                <p>The Balkans' first fully integrated, RFID-driven digital linen management and sourcing ecosystem for premium hospitality.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Business</h4>
+                <a href="digital-linen.html">Digital Linen</a>
+                <a href="supplies.html">Supplies</a>
+                <a href="digital-linen.html">RFID Tracking</a>
+                <a href="dashboard.html">Dashboard</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="about.html">About Us</a>
+                <a href="about.html">Team</a>
+                <a href="about.html">News</a>
+                <a href="about.html">Careers</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:info@linverge.com">info@linverge.com</a>
+                <a href="tel:+381112345678">+381 11 234 5678</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p><a href="zh/digital-linen.html" class="footer-copyright-link">&copy; 2026 Linverge. All rights reserved.</a></p>
+            <p>Belgrade, Serbia</p>
+        </div>
+    </footer>
+
+    <script>
+        // IntersectionObserver for .fade-up animations
+        const fadeObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+        // Counter animation
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    const duration = 2000;
+                    const startTime = performance.now();
+
+                    const animate = (currentTime) => {
+                        const elapsed = currentTime - startTime;
+                        const progress = Math.min(elapsed / duration, 1);
+                        const eased = 1 - Math.pow(1 - progress, 3);
+                        const current = Math.round(eased * target);
+                        counter.textContent = current;
+
+                        if (progress < 1) {
+                            requestAnimationFrame(animate);
+                        } else {
+                            counter.textContent = target;
+                        }
+                    };
+
+                    requestAnimationFrame(animate);
+                    counterObserver.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el));
+    </script>
+
+</body>
+</html>

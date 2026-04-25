@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - Linverge</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        .page-hero {
+            position: relative;
+            height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+            overflow: hidden;
+        }
+        .page-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('hero-bg.jpg') center/cover no-repeat;
+            opacity: 0.08;
+        }
+        .page-hero::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(10, 22, 40, 0.6) 0%, rgba(10, 22, 40, 0.8) 100%);
+            z-index: 1;
+        }
+        .page-hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 680px;
+            padding: 0 24px;
+        }
+        .page-hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 44px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            text-wrap: balance;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            line-height: 1.2;
+        }
+        .page-hero p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.65);
+            line-height: 1.7;
+        }
+
+        /* Mission */
+        .mission-block {
+            text-align: center;
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 48px 24px;
+        }
+        .mission-block .quote {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .mission-block p {
+            font-size: 17px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .team-card {
+            text-align: center;
+            padding: 32px 24px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            transition: var(--transition);
+        }
+        .team-card:hover {
+            box-shadow: 0 12px 40px var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        .team-avatar {
+            width: 96px; height: 96px;
+            background: linear-gradient(135deg, var(--primary), var(--tech));
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+        }
+        .team-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .team-card .role {
+            font-size: 13px;
+            color: var(--tech);
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        .team-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Local advantage */
+        .local-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+        .local-visual {
+            background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+            border-radius: 16px;
+            height: 360px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(255,255,255,0.3);
+            font-size: 18px;
+        }
+        .local-content h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .local-content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        /* Values */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+        .value-card {
+            padding: 36px 28px;
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .value-card:hover {
+            box-shadow: 0 12px 40px var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        .value-icon {
+            width: 48px; height: 48px;
+            background: rgba(46,204,113,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 16px;
+        }
+        .value-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .value-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        .dark-section {
+            background: linear-gradient(135deg, var(--midnight), var(--midnight-light));
+            padding: 80px 48px;
+            text-align: center;
+        }
+        .dark-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 32px;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 16px;
+            overflow-wrap: break-word;
+            word-break: break-word;
+        }
+        .dark-section p {
+            font-size: 17px;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 36px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 1024px) {
+            .team-grid { grid-template-columns: 1fr; }
+            .local-grid { grid-template-columns: 1fr; }
+            .values-grid { grid-template-columns: 1fr; }
+            .page-hero h1 { font-size: 32px; }
+        }
+        @media (max-width: 768px) {
+            .page-hero { height: 400px; }
+            .page-hero h1 { font-size: 28px; }
+            .mission-block .quote { font-size: 22px; }
+            .dark-section { padding: 64px 20px; }
+        }
+
+        /* Why Belgrade */
+        .belgrade-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 28px;
+        }
+        .belgrade-card {
+            background: #fff;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 36px 28px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .belgrade-card:hover {
+            box-shadow: 0 12px 40px var(--shadow-hover);
+            transform: translateY(-4px);
+        }
+        .belgrade-num {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+            margin-bottom: 8px;
+        }
+        .belgrade-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+        .belgrade-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+        @media (max-width: 1024px) {
+            .belgrade-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION -->
+    <nav class="navbar scrolled" id="navbar">
+        <a href="index.html" class="nav-logo">Li<span class="accent">n</span>verge</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="digital-linen.html">Digital Linen</a></li>
+            <li><a href="supplies.html">Supplies</a></li>
+            <li><a href="about.html" class="active">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li class="lang-switch">
+                <a href="about.html" class="active">EN</a>
+                <a href="sr/about.html">SR</a>
+            </li>
+            <li><a href="contact.html" class="nav-cta">Contact Us</a></li>
+        </ul>
+    </nav>
+
+    <!-- PAGE HERO -->
+    <section class="page-hero">
+        <div class="page-hero-content">
+            <h1>Built for the Balkans</h1>
+            <p>A local team with global standards, serving hotels across Belgrade and beyond.</p>
+        </div>
+    </section>
+
+    <!-- MISSION -->
+    <section class="section">
+        <div class="mission-block fade-up">
+            <p class="quote">"We believe hotel operations should be simpler, smarter, and more transparent."</p>
+            <p>Linverge was founded with a simple observation: hotels in the Balkan region spend too much time and money managing linen and supplies, often without knowing where their assets are or whether they're getting fair pricing. We set out to change that by combining RFID technology with integrated supply chain management, all delivered by a team that understands the local market.</p>
+        </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="section" style="background: var(--mint-white);">
+        <div class="section-header fade-up">
+            <p class="section-label">The Team</p>
+            <h2 class="section-title">People Behind Linverge</h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-card fade-up">
+                <div class="team-avatar">M</div>
+                <h3>Marko Petrovic</h3>
+                <div class="role">Founder & CEO</div>
+                <p>Former hotel operations director with 12 years in the Balkan hospitality industry. Saw the linen management problem firsthand and decided to solve it.</p>
+            </div>
+            <div class="team-card fade-up">
+                <div class="team-avatar">A</div>
+                <h3>Ana Jovanovic</h3>
+                <div class="role">Head of Technology</div>
+                <p>IoT and RFID systems specialist. Previously led hardware integrations for logistics companies across Southeast Europe.</p>
+            </div>
+            <div class="team-card fade-up">
+                <div class="team-avatar">D</div>
+                <h3>Dragan Nikolic</h3>
+                <div class="role">Head of Supply Chain</div>
+                <p>15 years in international procurement. Built supplier networks across Turkey, China, and EU markets for hospitality clients.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCAL ADVANTAGE -->
+    <section class="section">
+        <div class="section-header fade-up">
+            <p class="section-label">Local Advantage</p>
+            <h2 class="section-title">Why Being in Belgrade Matters</h2>
+        </div>
+        <div class="local-grid">
+            <div class="local-visual fade-up">
+                <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="1"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div class="local-content fade-up">
+                <h3>We're Where You Are</h3>
+                <p>International solutions providers often treat the Balkans as an afterthought. We're based here, speak the language, understand the regulatory landscape, and can be at your hotel within hours, not days.</p>
+                <p>Our deep relationships with local laundries, logistics providers, and hotel associations mean we don't just deliver technology &mdash; we deliver a solution that actually works in this market.</p>
+                <p>And because we're local, we can offer something multinational competitors can't: genuine partnership. When you call, you talk to a person who knows your name and your hotel.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY BELGRADE DEEP DIVE -->
+    <section class="section" style="background: var(--mint-white);">
+        <div class="section-header fade-up">
+            <p class="section-label">Local Advantage</p>
+            <h2 class="section-title">Why Belgrade Makes the Difference</h2>
+            <p class="section-desc">Three reasons local hotels choose a local partner over international vendors</p>
+        </div>
+        <div class="belgrade-grid fade-up">
+            <div class="belgrade-card">
+                <div class="belgrade-num">24h</div>
+                <div class="belgrade-title">On-Site Response</div>
+                <p>When something goes wrong at 7 AM before check-out, you can't wait 48 hours for a support ticket. Our Belgrade-based team can be at your hotel the same day. Hardware issues, software questions, training needs &mdash; handled in person, not over email.</p>
+            </div>
+            <div class="belgrade-card">
+                <div class="belgrade-num">Hub</div>
+                <div class="belgrade-title">Balkan Logistics Hub</div>
+                <p>Belgrade sits at the crossroads of Central Europe, the Mediterranean, and the Middle East. This geographic position gives us efficient access to supply chains from the EU, Turkey, and beyond &mdash; translating to faster delivery and better pricing for your hotel.</p>
+            </div>
+            <div class="belgrade-card">
+                <div class="belgrade-num">E-Fis</div>
+                <div class="belgrade-title">E-fiskalizacija Integration</div>
+                <p>Serbia's tax system requires electronic fiscalization (E-fiskalizacija). Our technical team has deep expertise in integrating with local billing and tax compliance systems. Your invoices, reports, and financial data flow seamlessly into local requirements &mdash; no workarounds needed.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALUES -->
+    <section class="section" style="background: var(--mint-white);">
+        <div class="section-header fade-up">
+            <p class="section-label">Values</p>
+            <h2 class="section-title">How We Work</h2>
+        </div>
+        <div class="values-grid">
+            <div class="value-card fade-up">
+                <div class="value-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--tech)" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                </div>
+                <h3>Quality First</h3>
+                <p>We never compromise on product quality or service standards. Every item and every interaction reflects our commitment to excellence.</p>
+            </div>
+            <div class="value-card fade-up">
+                <div class="value-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--tech)" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                </div>
+                <h3>Transparency</h3>
+                <p>Clear pricing, visible supply chains, honest data. No hidden fees, no opaque margins, no surprises.</p>
+            </div>
+            <div class="value-card fade-up">
+                <div class="value-icon">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--tech)" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <h3>Partnership</h3>
+                <p>We succeed when our hotel partners succeed. Our business model is built on long-term relationships, not one-time transactions.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="dark-section">
+        <h2 class="fade-up">Want to meet the team?</h2>
+        <p class="fade-up">We're always happy to show you around our Belgrade office and discuss how we can help your hotel.</p>
+        <a href="contact.html" class="cta-btn fade-up">
+            Get in Touch
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">Li<span class="accent">n</span>verge</div>
+                <p>Where Linen Meets Innovation<br>Belgrade, Serbia</p>
+            </div>
+            <div class="footer-col">
+                <h4>Business</h4>
+                <a href="digital-linen.html">Digital Linen</a>
+                <a href="supplies.html">Hotel Supplies</a>
+                <a href="digital-linen.html">RFID Tracking</a>
+                <a href="dashboard.html">Dashboard</a>
+            </div>
+            <div class="footer-col">
+                <h4>Company</h4>
+                <a href="about.html">About Us</a>
+                <a href="about.html">Team</a>
+                <a href="about.html">News</a>
+                <a href="about.html">Careers</a>
+            </div>
+            <div class="footer-col">
+                <h4>Contact</h4>
+                <a href="mailto:info@linverge.com">info@linverge.com</a>
+                <a href="tel:+381112345678">+381 11 234 5678</a>
+                <a href="#">LinkedIn</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p><a href="zh/about.html" class="footer-copyright-link">© 2026 Linverge. All rights reserved.</a></p>
+            <p>Belgrade, Serbia</p>
+        </div>
+    </footer>
+
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('visible');
+            });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+    </script>
+
+</body>
+</html>

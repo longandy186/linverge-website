@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Linverge</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        .dash-wrapper {
+            min-height: 100vh;
+            background: var(--bg-light);
+            padding: 32px;
+        }
+
+        .dash-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 32px;
+        }
+
+        .dash-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .dash-logo .accent { color: var(--tech); }
+
+        .dash-logout {
+            font-size: 14px;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            transition: var(--transition);
+        }
+
+        .dash-logout:hover {
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .dash-placeholder {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 80px 40px;
+            text-align: center;
+            box-shadow: 0 4px 20px var(--shadow);
+            max-width: 800px;
+            margin: 60px auto;
+        }
+
+        .dash-placeholder h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .dash-placeholder p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            max-width: 480px;
+            margin: 0 auto 32px;
+            line-height: 1.7;
+        }
+
+        .dash-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            max-width: 700px;
+            margin: 0 auto 40px;
+        }
+
+        .dash-feature {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+        }
+
+        .dash-feature-icon {
+            width: 44px;
+            height: 44px;
+            margin: 0 auto 12px;
+            background: var(--tech-soft);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .dash-feature-icon svg {
+            width: 22px;
+            height: 22px;
+            stroke: var(--tech);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .dash-feature h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .dash-feature p {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        @media (max-width: 768px) {
+            .dash-wrapper { padding: 16px; }
+            .dash-placeholder { padding: 48px 24px; }
+            .dash-placeholder h2 { font-size: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="dash-wrapper">
+        <div class="dash-header">
+            <div class="dash-logo">Li<span class="accent">n</span>verge Dashboard</div>
+            <a href="index.html" class="dash-logout">Sign Out</a>
+        </div>
+
+        <div class="dash-placeholder">
+            <h2>Dashboard Coming Soon</h2>
+            <p>The data dashboard is under development. Once launched, you'll be able to monitor RFID tracking data, linen inventory levels, wash cycle counts, and more — all in real time.</p>
+
+            <div class="dash-features">
+                <div class="dash-feature">
+                    <div class="dash-feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
+                    </div>
+                    <h4>RFID Data</h4>
+                    <p>Real-time tracking</p>
+                </div>
+                <div class="dash-feature">
+                    <div class="dash-feature-icon">
+                        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                    </div>
+                    <h4>Inventory</h4>
+                    <p>Stock levels</p>
+                </div>
+                <div class="dash-feature">
+                    <div class="dash-feature-icon">
+                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+                    </div>
+                    <h4>Wash Cycles</h4>
+                    <p>Lifecycle data</p>
+                </div>
+            </div>
+
+            <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to website</a>
+        </div>
+    </div>
+</body>
+</html>
