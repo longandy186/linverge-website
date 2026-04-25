@@ -1,168 +1,2003 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Linverge</title>
+    <title>Linverge Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&family=Open+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/common.css">
     <style>
-        .dash-wrapper {
-            min-height: 100vh;
-            background: var(--bg-light);
-            padding: 32px;
+        /* ===== CSS Variables (same design system) ===== */
+        :root {
+            --primary: #004A99;
+            --primary-dark: #003570;
+            --primary-light: #0062C4;
+            --tech: #2ECC71;
+            --tech-glow: rgba(46, 204, 113, 0.3);
+            --tech-soft: rgba(46, 204, 113, 0.08);
+            --dark: #333333;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+            --text-muted: #999999;
+            --bg-white: #FFFFFF;
+            --bg-light: #F8F9FA;
+            --border: #E8EBED;
+            --shadow: rgba(0, 0, 0, 0.06);
+            --shadow-hover: rgba(0, 0, 0, 0.12);
+            --transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            --danger: #E74C3C;
+            --danger-soft: rgba(231, 76, 60, 0.08);
+            --warning: #F39C12;
+            --warning-soft: rgba(243, 156, 18, 0.08);
+            --info: #3498DB;
+            --info-soft: rgba(52, 152, 219, 0.08);
         }
 
-        .dash-header {
+        /* ===== Reset & Base ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-light);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== Top Navigation ===== */
+        .top-nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 1000;
+            height: 64px;
+            background: var(--bg-white);
+            border-bottom: 1px solid var(--border);
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 32px;
+            padding: 0 32px;
+            box-shadow: 0 1px 8px var(--shadow);
         }
 
-        .dash-logo {
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .nav-logo {
             font-family: 'Montserrat', sans-serif;
-            font-size: 24px;
             font-weight: 800;
+            font-size: 22px;
             color: var(--primary);
-        }
-
-        .dash-logo .accent { color: var(--tech); }
-
-        .dash-logout {
-            font-size: 14px;
-            color: var(--text-muted);
             text-decoration: none;
-            padding: 8px 16px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            transition: var(--transition);
+            letter-spacing: 0.02em;
         }
 
-        .dash-logout:hover {
-            color: var(--primary);
-            border-color: var(--primary);
-        }
+        .nav-logo .accent { color: var(--tech); }
 
-        .dash-placeholder {
-            background: var(--bg-white);
-            border-radius: 16px;
-            padding: 80px 40px;
-            text-align: center;
-            box-shadow: 0 4px 20px var(--shadow);
-            max-width: 800px;
-            margin: 60px auto;
-        }
-
-        .dash-placeholder h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 12px;
-        }
-
-        .dash-placeholder p {
-            color: var(--text-secondary);
-            font-size: 16px;
-            max-width: 480px;
-            margin: 0 auto 32px;
-            line-height: 1.7;
-        }
-
-        .dash-features {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 20px;
-            max-width: 700px;
-            margin: 0 auto 40px;
-        }
-
-        .dash-feature {
+        .nav-badge {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-muted);
             background: var(--bg-light);
-            border-radius: 12px;
-            padding: 24px 16px;
-            text-align: center;
+            padding: 4px 12px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
         }
 
-        .dash-feature-icon {
-            width: 44px;
-            height: 44px;
-            margin: 0 auto 12px;
-            background: var(--tech-soft);
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border);
             border-radius: 10px;
+            background: var(--bg-white);
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
+            transition: var(--transition);
+            color: var(--text-secondary);
         }
 
-        .dash-feature-icon svg {
-            width: 22px;
-            height: 22px;
-            stroke: var(--tech);
+        .nav-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--tech-soft);
+        }
+
+        .nav-btn svg {
+            width: 20px;
+            height: 20px;
+            stroke: currentColor;
             fill: none;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
 
-        .dash-feature h4 {
+        .nav-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .nav-signout {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-decoration: none;
+            padding: 8px 16px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: var(--transition);
+        }
+
+        .nav-signout:hover {
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        /* ===== Settings Panel ===== */
+        .settings-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .settings-overlay.visible {
+            display: block;
+            opacity: 1;
+        }
+
+        .settings-panel {
+            position: fixed;
+            top: 0;
+            right: -520px;
+            width: 500px;
+            max-width: 100vw;
+            height: 100vh;
+            background: var(--bg-white);
+            z-index: 2001;
+            box-shadow: -8px 0 32px rgba(0, 0, 0, 0.15);
+            transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .settings-panel.open {
+            right: 0;
+        }
+
+        .settings-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 24px 28px;
+            border-bottom: 1px solid var(--border);
+            flex-shrink: 0;
+        }
+
+        .settings-header h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .settings-close {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: var(--bg-light);
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .settings-close:hover {
+            background: var(--danger-soft);
+            color: var(--danger);
+        }
+
+        .settings-close svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .settings-body {
+            padding: 28px;
+            flex: 1;
+        }
+
+        .settings-section {
+            margin-bottom: 28px;
+        }
+
+        .settings-section-title {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--tech-soft);
+        }
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 6px;
+        }
+
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            color: var(--text-primary);
+            background: var(--bg-white);
+            transition: var(--transition);
+            outline: none;
+        }
+
+        .form-group input:focus, .form-group select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-group .input-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .settings-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            flex: 1;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            box-shadow: 0 4px 16px rgba(0, 74, 153, 0.25);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background: var(--bg-light);
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-tech {
+            background: var(--tech);
+            color: var(--primary-dark);
+            flex: 1;
+        }
+
+        .btn-tech:hover {
+            box-shadow: 0 4px 16px var(--tech-glow);
+            transform: translateY(-1px);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        .btn-icon {
+            width: 36px;
+            height: 36px;
+            padding: 0;
+            border-radius: 8px;
+        }
+
+        .connection-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: 16px;
+        }
+
+        .connection-status.success {
+            background: var(--tech-soft);
+            color: #27AE60;
+            border: 1px solid rgba(46, 204, 113, 0.2);
+        }
+
+        .connection-status.error {
+            background: var(--danger-soft);
+            color: var(--danger);
+            border: 1px solid rgba(231, 76, 60, 0.2);
+        }
+
+        .connection-status .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .connection-status.success .dot { background: #27AE60; }
+        .connection-status.error .dot { background: var(--danger); }
+
+        /* ===== Main Content ===== */
+        .main-content {
+            padding-top: 64px;
+            min-height: 100vh;
+        }
+
+        .dashboard-container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 28px 32px 48px;
+        }
+
+        /* ===== Setup Wizard (no config) ===== */
+        .setup-wizard {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: calc(100vh - 200px);
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .setup-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--tech-soft);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+        }
+
+        .setup-icon svg {
+            width: 40px;
+            height: 40px;
+            stroke: var(--tech);
+            fill: none;
+            stroke-width: 1.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .setup-wizard h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 12px;
+        }
+
+        .setup-wizard p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 480px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+
+        .setup-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            max-width: 640px;
+            width: 100%;
+            margin-bottom: 36px;
+        }
+
+        .setup-step {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .setup-step:hover {
+            box-shadow: 0 8px 24px var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .setup-step-num {
+            width: 28px;
+            height: 28px;
+            background: var(--primary);
+            color: #fff;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .setup-step h4 {
             font-size: 14px;
             font-weight: 600;
             color: var(--text-primary);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
         }
 
-        .dash-feature p {
+        .setup-step p {
             font-size: 12px;
             color: var(--text-muted);
             margin: 0;
+            line-height: 1.5;
+        }
+
+        /* ===== Summary Cards ===== */
+        .summary-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .summary-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--tech));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .summary-card:hover {
+            box-shadow: 0 8px 32px var(--shadow-hover);
+            transform: translateY(-2px);
+        }
+
+        .summary-card:hover::before { transform: scaleX(1); }
+
+        .summary-card-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .summary-card-icon svg {
+            width: 24px;
+            height: 24px;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            fill: none;
+        }
+
+        .summary-card-icon.blue {
+            background: var(--info-soft);
+        }
+        .summary-card-icon.blue svg { stroke: var(--info); }
+
+        .summary-card-icon.green {
+            background: var(--tech-soft);
+        }
+        .summary-card-icon.green svg { stroke: var(--tech); }
+
+        .summary-card-icon.orange {
+            background: var(--warning-soft);
+        }
+        .summary-card-icon.orange svg { stroke: var(--warning); }
+
+        .summary-card-icon.red {
+            background: var(--danger-soft);
+        }
+        .summary-card-icon.red svg { stroke: var(--danger); }
+
+        .summary-card-info { flex: 1; min-width: 0; }
+
+        .summary-card-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-bottom: 4px;
+        }
+
+        .summary-card-value {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-primary);
+            line-height: 1.2;
+        }
+
+        .summary-card-sub {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .summary-card.alert-active {
+            border-color: rgba(231, 76, 60, 0.3);
+        }
+
+        .summary-card.alert-active .summary-card-value {
+            color: var(--danger);
+        }
+
+        /* ===== Tabs ===== */
+        .tabs-container {
+            background: var(--bg-white);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        .tabs-nav {
+            display: flex;
+            border-bottom: 1px solid var(--border);
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: none;
+        }
+
+        .tabs-nav::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            flex: 1;
+            min-width: 120px;
+            padding: 16px 20px;
+            border: none;
+            background: none;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            white-space: nowrap;
+            text-align: center;
+        }
+
+        .tab-btn:hover {
+            color: var(--text-primary);
+            background: var(--bg-light);
+        }
+
+        .tab-btn.active {
+            color: var(--primary);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 16px;
+            right: 16px;
+            height: 3px;
+            background: var(--tech);
+            border-radius: 3px 3px 0 0;
+        }
+
+        .tab-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            vertical-align: -3px;
+            margin-right: 6px;
+        }
+
+        /* ===== Toolbar ===== */
+        .table-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 360px;
+        }
+
+        .search-box svg {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 16px;
+            height: 16px;
+            stroke: var(--text-muted);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            pointer-events: none;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px 14px 10px 38px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            color: var(--text-primary);
+            background: var(--bg-light);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .search-box input:focus {
+            border-color: var(--primary);
+            background: var(--bg-white);
+            box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
+        }
+
+        .filter-select {
+            padding: 10px 32px 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            color: var(--text-secondary);
+            background: var(--bg-light) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23999' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E") no-repeat right 12px center;
+            appearance: none;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .filter-select:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(0, 74, 153, 0.1);
+        }
+
+        .toolbar-right {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .toolbar-info {
+            font-size: 12px;
+            color: var(--text-muted);
+            padding: 0 8px;
+        }
+
+        /* ===== Data Table ===== */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .data-table thead {
+            background: var(--bg-light);
+        }
+
+        .data-table th {
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: var(--text-secondary);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+            white-space: nowrap;
+            border-bottom: 1px solid var(--border);
+            user-select: none;
+        }
+
+        .data-table td {
+            padding: 14px 16px;
+            color: var(--text-primary);
+            border-bottom: 1px solid var(--border);
+            white-space: nowrap;
+        }
+
+        .data-table tbody tr {
+            transition: background 0.15s ease;
+        }
+
+        .data-table tbody tr:hover {
+            background: var(--tech-soft);
+        }
+
+        .data-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* Status badges */
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+        }
+
+        .status-badge.in-use {
+            background: var(--tech-soft);
+            color: #27AE60;
+        }
+        .status-badge.in-use .dot { background: #27AE60; }
+
+        .status-badge.idle {
+            background: var(--info-soft);
+            color: var(--info);
+        }
+        .status-badge.idle .dot { background: var(--info); }
+
+        .status-badge.washing {
+            background: var(--warning-soft);
+            color: var(--warning);
+        }
+        .status-badge.washing .dot { background: var(--warning); }
+
+        .status-badge.alert {
+            background: var(--danger-soft);
+            color: var(--danger);
+        }
+        .status-badge.alert .dot { background: var(--danger); }
+
+        .status-badge.received {
+            background: var(--tech-soft);
+            color: #27AE60;
+        }
+        .status-badge.received .dot { background: #27AE60; }
+
+        .status-badge.sent {
+            background: var(--info-soft);
+            color: var(--info);
+        }
+        .status-badge.sent .dot { background: var(--info); }
+
+        .status-badge.active {
+            background: var(--tech-soft);
+            color: #27AE60;
+        }
+        .status-badge.active .dot { background: #27AE60; }
+
+        .status-badge.inactive {
+            background: var(--danger-soft);
+            color: var(--danger);
+        }
+        .status-badge.inactive .dot { background: var(--danger); }
+
+        .status-badge.normal {
+            background: var(--tech-soft);
+            color: #27AE60;
+        }
+        .status-badge.normal .dot { background: #27AE60; }
+
+        .status-badge.abnormal {
+            background: var(--danger-soft);
+            color: var(--danger);
+        }
+        .status-badge.abnormal .dot { background: var(--danger); }
+
+        /* ===== Pagination ===== */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .pagination-info {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .pagination-controls {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .page-btn {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--bg-white);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            transition: var(--transition);
+        }
+
+        .page-btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .page-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: #fff;
+        }
+
+        .page-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .page-btn svg {
+            width: 16px;
+            height: 16px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        /* ===== Empty State ===== */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 24px;
+            text-align: center;
+        }
+
+        .empty-state svg {
+            width: 64px;
+            height: 64px;
+            stroke: var(--border);
+            fill: none;
+            stroke-width: 1;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            margin-bottom: 20px;
+        }
+
+        .empty-state h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 400px;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        /* ===== Loading State ===== */
+        .loading-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 24px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-state p {
+            font-size: 14px;
+            color: var(--text-muted);
+        }
+
+        /* ===== Footer ===== */
+        .dashboard-footer {
+            text-align: center;
+            padding: 24px 32px;
+            font-size: 13px;
+            color: var(--text-muted);
+            border-top: 1px solid var(--border);
+            margin-top: 24px;
+        }
+
+        .dashboard-footer a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .dashboard-footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ===== Toast Notification ===== */
+        .toast-container {
+            position: fixed;
+            top: 80px;
+            right: 24px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .toast {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 20px;
+            background: var(--bg-white);
+            border-radius: 10px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-primary);
+            transform: translateX(120%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            max-width: 360px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .toast.show { transform: translateX(0); }
+
+        .toast.success { border-left-color: var(--tech); }
+        .toast.error { border-left-color: var(--danger); }
+        .toast.warning { border-left-color: var(--warning); }
+
+        .toast svg {
+            width: 18px;
+            height: 18px;
+            stroke: currentColor;
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            flex-shrink: 0;
+        }
+
+        .toast.success svg { stroke: var(--tech); }
+        .toast.error svg { stroke: var(--danger); }
+        .toast.warning svg { stroke: var(--warning); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .summary-row { grid-template-columns: repeat(2, 1fr); }
+            .dashboard-container { padding: 24px; }
+            .setup-steps { grid-template-columns: repeat(3, 1fr); }
         }
 
         @media (max-width: 768px) {
-            .dash-wrapper { padding: 16px; }
-            .dash-placeholder { padding: 48px 24px; }
-            .dash-placeholder h2 { font-size: 22px; }
+            .top-nav { padding: 0 16px; }
+            .nav-badge { display: none; }
+            .dashboard-container { padding: 16px; }
+            .summary-row { grid-template-columns: 1fr 1fr; gap: 12px; }
+            .summary-card { padding: 16px; }
+            .summary-card-value { font-size: 22px; }
+            .summary-card-icon { width: 40px; height: 40px; }
+            .summary-card-icon svg { width: 20px; height: 20px; }
+            .tab-btn { min-width: 100px; padding: 14px 12px; font-size: 13px; }
+            .tab-btn svg { display: none; }
+            .table-toolbar { flex-direction: column; align-items: stretch; }
+            .toolbar-left { flex-direction: column; }
+            .search-box { max-width: 100%; }
+            .toolbar-right { justify-content: flex-end; }
+            .settings-panel { width: 100vw; }
+            .setup-steps { grid-template-columns: 1fr; max-width: 320px; }
+        }
+
+        @media (max-width: 480px) {
+            .summary-row { grid-template-columns: 1fr; }
+            .nav-signout span { display: none; }
+            .pagination { flex-direction: column; gap: 12px; }
         }
     </style>
 </head>
 <body>
-    <div class="dash-wrapper">
-        <div class="dash-header">
-            <div class="dash-logo">Li<span class="accent">n</span>verge Dashboard</div>
-            <a href="index.html" class="dash-logout">Sign Out</a>
+
+    <!-- ===== Top Navigation ===== -->
+    <nav class="top-nav">
+        <div class="nav-left">
+            <a href="index.html" class="nav-logo">Li<span class="accent">n</span>verge</a>
+            <span class="nav-badge">Dashboard</span>
         </div>
+        <div class="nav-right">
+            <button class="nav-btn" id="settingsBtn" title="设置">
+                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+            </button>
+            <a href="index.html" class="nav-signout">
+                <svg viewBox="0 0 24 24" style="width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-2px;margin-right:4px;"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+                <span>退出</span>
+            </a>
+        </div>
+    </nav>
 
-        <div class="dash-placeholder">
-            <h2>Dashboard Coming Soon</h2>
-            <p>The data dashboard is under development. Once launched, you'll be able to monitor RFID tracking data, linen inventory levels, wash cycle counts, and more — all in real time.</p>
+    <!-- ===== Settings Overlay ===== -->
+    <div class="settings-overlay" id="settingsOverlay"></div>
 
-            <div class="dash-features">
-                <div class="dash-feature">
-                    <div class="dash-feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg>
-                    </div>
-                    <h4>RFID Data</h4>
-                    <p>Real-time tracking</p>
+    <!-- ===== Settings Panel ===== -->
+    <aside class="settings-panel" id="settingsPanel">
+        <div class="settings-header">
+            <h2>飞书 API 配置</h2>
+            <button class="settings-close" id="settingsClose">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+            </button>
+        </div>
+        <div class="settings-body">
+            <div class="settings-section">
+                <div class="settings-section-title">应用凭证</div>
+                <div class="form-group">
+                    <label for="cfgAppId">APP ID</label>
+                    <input type="text" id="cfgAppId" placeholder="cli_xxxxxxxxxx">
                 </div>
-                <div class="dash-feature">
-                    <div class="dash-feature-icon">
-                        <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
-                    </div>
-                    <h4>Inventory</h4>
-                    <p>Stock levels</p>
+                <div class="form-group">
+                    <label for="cfgAppSecret">APP Secret</label>
+                    <input type="password" id="cfgAppSecret" placeholder="请输入应用密钥">
                 </div>
-                <div class="dash-feature">
-                    <div class="dash-feature-icon">
-                        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
-                    </div>
-                    <h4>Wash Cycles</h4>
-                    <p>Lifecycle data</p>
+                <div class="form-group">
+                    <label for="cfgBaseToken">Base Token / App Token</label>
+                    <input type="text" id="cfgBaseToken" placeholder="bascnxxxxxxxxxx 或 appxxxxxxxxxx">
+                    <div class="input-hint">多维表格的 base_token 或 app_token</div>
                 </div>
             </div>
 
-            <a href="index.html" style="color: var(--primary); text-decoration: none; font-weight: 600;">&larr; Back to website</a>
+            <div class="settings-section">
+                <div class="settings-section-title">数据表 ID</div>
+                <div class="form-group">
+                    <label for="cfgTableAssets">布草资产表</label>
+                    <input type="text" id="cfgTableAssets" placeholder="tblxxxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label for="cfgTableTransactions">收发记录表</label>
+                    <input type="text" id="cfgTableTransactions" placeholder="tblxxxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label for="cfgTableWash">洗涤记录表</label>
+                    <input type="text" id="cfgTableWash" placeholder="tblxxxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label for="cfgTableHotels">酒店客户表</label>
+                    <input type="text" id="cfgTableHotels" placeholder="tblxxxxxxxxxx">
+                </div>
+                <div class="form-group">
+                    <label for="cfgTableInventory">库存盘点表</label>
+                    <input type="text" id="cfgTableInventory" placeholder="tblxxxxxxxxxx">
+                </div>
+            </div>
+
+            <div class="settings-actions">
+                <button class="btn btn-primary" id="saveConfigBtn">
+                    <svg viewBox="0 0 24 24"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+                    保存配置
+                </button>
+                <button class="btn btn-tech" id="testConnBtn">
+                    <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                    测试连接
+                </button>
+            </div>
+
+            <div id="connectionStatus"></div>
         </div>
-    </div>
+    </aside>
+
+    <!-- ===== Toast Container ===== -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- ===== Main Content ===== -->
+    <main class="main-content">
+        <div class="dashboard-container">
+
+            <!-- Setup Wizard (shown when no config) -->
+            <div class="setup-wizard" id="setupWizard" style="display:none;">
+                <div class="setup-icon">
+                    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                </div>
+                <h2>欢迎使用 Linverge Dashboard</h2>
+                <p>请先配置飞书多维表格 API 连接，即可实时查看布草资产、收发记录、洗涤数据等运营信息。</p>
+                <div class="setup-steps">
+                    <div class="setup-step">
+                        <div class="setup-step-num">1</div>
+                        <h4>获取凭证</h4>
+                        <p>在飞书开放平台创建应用，获取 APP ID 和 Secret</p>
+                    </div>
+                    <div class="setup-step">
+                        <div class="setup-step-num">2</div>
+                        <h4>配置表格</h4>
+                        <p>填入多维表格 Token 和各数据表的 Table ID</p>
+                    </div>
+                    <div class="setup-step">
+                        <div class="setup-step-num">3</div>
+                        <h4>开始使用</h4>
+                        <p>保存配置后，数据将自动加载到仪表盘</p>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="setupConfigBtn" style="padding:14px 40px;">
+                    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                    前往配置
+                </button>
+            </div>
+
+            <!-- Dashboard Content (shown when config exists) -->
+            <div id="dashboardContent" style="display:none;">
+
+                <!-- Row 1: Summary Cards -->
+                <div class="summary-row">
+                    <div class="summary-card">
+                        <div class="summary-card-icon blue">
+                            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+                        </div>
+                        <div class="summary-card-info">
+                            <div class="summary-card-label">总资产数</div>
+                            <div class="summary-card-value" id="statTotalAssets">--</div>
+                            <div class="summary-card-sub" id="statTotalAssetsSub">加载中...</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-card-icon green">
+                            <svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        </div>
+                        <div class="summary-card-info">
+                            <div class="summary-card-label">在用中</div>
+                            <div class="summary-card-value" id="statInUse">--</div>
+                            <div class="summary-card-sub" id="statInUseSub">加载中...</div>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-card-icon orange">
+                            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                        </div>
+                        <div class="summary-card-info">
+                            <div class="summary-card-label">今日洗涤</div>
+                            <div class="summary-card-value" id="statWashToday">--</div>
+                            <div class="summary-card-sub" id="statWashTodaySub">加载中...</div>
+                        </div>
+                    </div>
+                    <div class="summary-card" id="alertCard">
+                        <div class="summary-card-icon red">
+                            <svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+                        </div>
+                        <div class="summary-card-info">
+                            <div class="summary-card-label">预警</div>
+                            <div class="summary-card-value" id="statAlerts">--</div>
+                            <div class="summary-card-sub" id="statAlertsSub">加载中...</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 2 & 3: Tabs + Table -->
+                <div class="tabs-container">
+                    <div class="tabs-nav" id="tabsNav">
+                        <button class="tab-btn active" data-tab="assets">
+                            <svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+                            布草资产
+                        </button>
+                        <button class="tab-btn" data-tab="transactions">
+                            <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                            收发记录
+                        </button>
+                        <button class="tab-btn" data-tab="wash">
+                            <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+                            洗涤记录
+                        </button>
+                        <button class="tab-btn" data-tab="hotels">
+                            <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+                            酒店客户
+                        </button>
+                        <button class="tab-btn" data-tab="inventory">
+                            <svg viewBox="0 0 24 24"><path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2"/><rect x="9" y="3" width="6" height="4" rx="1"/><line x1="9" y1="12" x2="15" y2="12"/><line x1="9" y1="16" x2="15" y2="16"/></svg>
+                            库存盘点
+                        </button>
+                    </div>
+
+                    <!-- Toolbar -->
+                    <div class="table-toolbar">
+                        <div class="toolbar-left">
+                            <div class="search-box">
+                                <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                                <input type="text" id="searchInput" placeholder="搜索...">
+                            </div>
+                            <select class="filter-select" id="filterSelect">
+                                <option value="">全部状态</option>
+                            </select>
+                        </div>
+                        <div class="toolbar-right">
+                            <span class="toolbar-info" id="toolbarInfo"></span>
+                            <button class="btn btn-secondary btn-sm" id="exportCsvBtn" title="导出CSV">
+                                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                                导出 CSV
+                            </button>
+                            <button class="btn btn-secondary btn-icon btn-sm" id="refreshBtn" title="刷新数据">
+                                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Table Area -->
+                    <div id="tableArea">
+                        <!-- Loading State -->
+                        <div class="loading-state" id="loadingState">
+                            <div class="spinner"></div>
+                            <p>正在加载数据...</p>
+                        </div>
+
+                        <!-- Empty State -->
+                        <div class="empty-state" id="emptyState" style="display:none;">
+                            <svg viewBox="0 0 24 24"><path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                            <h3>暂无数据</h3>
+                            <p>暂无数据，请先配置飞书API连接。如果已配置，请检查网络连接后重试。</p>
+                            <button class="btn btn-primary btn-sm" id="emptyConfigBtn">
+                                <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                                前往配置
+                            </button>
+                        </div>
+
+                        <!-- Data Table -->
+                        <div class="table-wrapper" id="tableWrapper" style="display:none;">
+                            <table class="data-table" id="dataTable">
+                                <thead id="tableHead"></thead>
+                                <tbody id="tableBody"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pagination -->
+                    <div class="pagination" id="pagination" style="display:none;">
+                        <div class="pagination-info" id="paginationInfo"></div>
+                        <div class="pagination-controls" id="paginationControls"></div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <footer class="dashboard-footer">
+            &copy; 2026 Linverge Dashboard. Powered by <a href="https://open.feishu.cn" target="_blank" rel="noopener">Feishu Bitable</a>.
+        </footer>
+    </main>
+
+    <!-- ===== Feishu API Middleware ===== -->
+    <script src="js/feishu-api.js"></script>
+
+    <!-- ===== Inline Dashboard Script ===== -->
+    <script>
+    (function() {
+        'use strict';
+
+        // ===== Constants =====
+        const CONFIG_KEY = 'linverge_dashboard_config';
+        const PAGE_SIZE = 20;
+
+        // ===== Tab Definitions =====
+        const TABS = {
+            assets: {
+                name: '布草资产',
+                tableId: 'tableAssets',
+                columns: ['RFID标签', '类别', '所属酒店', '状态', '洗涤次数', '创建时间'],
+                keys: ['rfid', 'category', 'hotel', 'status', 'washCount', 'createdAt'],
+                filters: [
+                    { value: '', label: '全部状态' },
+                    { value: '在用', label: '在用' },
+                    { value: '空闲', label: '空闲' },
+                    { value: '洗涤中', label: '洗涤中' },
+                    { value: '预警', label: '预警' }
+                ],
+                statusMap: {
+                    '在用': 'in-use',
+                    '空闲': 'idle',
+                    '洗涤中': 'washing',
+                    '预警': 'alert'
+                }
+            },
+            transactions: {
+                name: '收发记录',
+                tableId: 'tableTransactions',
+                columns: ['单据编号', '类型', '布草数量', '酒店', '操作时间'],
+                keys: ['docNo', 'type', 'quantity', 'hotel', 'operatedAt'],
+                filters: [
+                    { value: '', label: '全部类型' },
+                    { value: '收', label: '收入' },
+                    { value: '发', label: '发出' }
+                ],
+                statusMap: {
+                    '收': 'received',
+                    '发': 'sent'
+                }
+            },
+            wash: {
+                name: '洗涤记录',
+                tableId: 'tableWash',
+                columns: ['RFID标签', '洗涤次数', '洗涤日期', '状态'],
+                keys: ['rfid', 'washCount', 'washDate', 'status'],
+                filters: [
+                    { value: '', label: '全部状态' },
+                    { value: '已完成', label: '已完成' },
+                    { value: '进行中', label: '进行中' },
+                    { value: '待处理', label: '待处理' }
+                ],
+                statusMap: {
+                    '已完成': 'normal',
+                    '进行中': 'washing',
+                    '待处理': 'idle'
+                }
+            },
+            hotels: {
+                name: '酒店客户',
+                tableId: 'tableHotels',
+                columns: ['酒店名称', '联系人', '电话', '布草数量', '状态'],
+                keys: ['name', 'contact', 'phone', 'linenCount', 'status'],
+                filters: [
+                    { value: '', label: '全部状态' },
+                    { value: '活跃', label: '活跃' },
+                    { value: '停用', label: '停用' }
+                ],
+                statusMap: {
+                    '活跃': 'active',
+                    '停用': 'inactive'
+                }
+            },
+            inventory: {
+                name: '库存盘点',
+                tableId: 'tableInventory',
+                columns: ['盘点日期', '酒店', '应有数量', '实际数量', '差异'],
+                keys: ['checkDate', 'hotel', 'expected', 'actual', 'diff'],
+                filters: [
+                    { value: '', label: '全部状态' },
+                    { value: '正常', label: '正常' },
+                    { value: '异常', label: '异常' }
+                ],
+                statusMap: {
+                    '正常': 'normal',
+                    '异常': 'abnormal'
+                }
+            }
+        };
+
+        // ===== State =====
+        let currentTab = 'assets';
+        let currentPage = 1;
+        let allData = {};      // { tabKey: [rows] }
+        let filteredData = [];  // current filtered rows
+        let isLoading = false;
+
+        // ===== DOM Elements =====
+        const $ = (sel) => document.querySelector(sel);
+        const $$ = (sel) => document.querySelectorAll(sel);
+
+        const settingsBtn = $('#settingsBtn');
+        const settingsPanel = $('#settingsPanel');
+        const settingsOverlay = $('#settingsOverlay');
+        const settingsClose = $('#settingsClose');
+        const saveConfigBtn = $('#saveConfigBtn');
+        const testConnBtn = $('#testConnBtn');
+        const setupWizard = $('#setupWizard');
+        const dashboardContent = $('#dashboardContent');
+        const loadingState = $('#loadingState');
+        const emptyState = $('#emptyState');
+        const tableWrapper = $('#tableWrapper');
+        const tableHead = $('#tableHead');
+        const tableBody = $('#tableBody');
+        const searchInput = $('#searchInput');
+        const filterSelect = $('#filterSelect');
+        const toolbarInfo = $('#toolbarInfo');
+        const exportCsvBtn = $('#exportCsvBtn');
+        const refreshBtn = $('#refreshBtn');
+        const pagination = $('#pagination');
+        const paginationInfo = $('#paginationInfo');
+        const paginationControls = $('#paginationControls');
+        const toastContainer = $('#toastContainer');
+
+        // ===== Config Helpers =====
+        function getConfig() {
+            try {
+                const raw = localStorage.getItem(CONFIG_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (e) {
+                return null;
+            }
+        }
+
+        function saveConfig(config) {
+            localStorage.setItem(CONFIG_KEY, JSON.stringify(config));
+        }
+
+        function loadConfigToForm(config) {
+            if (!config) return;
+            $('#cfgAppId').value = config.appId || '';
+            $('#cfgAppSecret').value = config.appSecret || '';
+            $('#cfgBaseToken').value = config.baseToken || '';
+            $('#cfgTableAssets').value = config.tableAssets || '';
+            $('#cfgTableTransactions').value = config.tableTransactions || '';
+            $('#cfgTableWash').value = config.tableWash || '';
+            $('#cfgTableHotels').value = config.tableHotels || '';
+            $('#cfgTableInventory').value = config.tableInventory || '';
+        }
+
+        function readConfigFromForm() {
+            return {
+                appId: $('#cfgAppId').value.trim(),
+                appSecret: $('#cfgAppSecret').value.trim(),
+                baseToken: $('#cfgBaseToken').value.trim(),
+                tableAssets: $('#cfgTableAssets').value.trim(),
+                tableTransactions: $('#cfgTableTransactions').value.trim(),
+                tableWash: $('#cfgTableWash').value.trim(),
+                tableHotels: $('#cfgTableHotels').value.trim(),
+                tableInventory: $('#cfgTableInventory').value.trim()
+            };
+        }
+
+        // ===== Settings Panel =====
+        function openSettings() {
+            settingsPanel.classList.add('open');
+            settingsOverlay.classList.add('visible');
+            settingsBtn.classList.add('active');
+        }
+
+        function closeSettings() {
+            settingsPanel.classList.remove('open');
+            settingsOverlay.classList.remove('visible');
+            settingsBtn.classList.remove('active');
+        }
+
+        settingsBtn.addEventListener('click', () => {
+            if (settingsPanel.classList.contains('open')) {
+                closeSettings();
+            } else {
+                loadConfigToForm(getConfig());
+                openSettings();
+            }
+        });
+
+        settingsClose.addEventListener('click', closeSettings);
+        settingsOverlay.addEventListener('click', closeSettings);
+
+        $('#setupConfigBtn').addEventListener('click', openSettings);
+        $('#emptyConfigBtn').addEventListener('click', openSettings);
+
+        // ===== Save Config =====
+        saveConfigBtn.addEventListener('click', () => {
+            const config = readConfigFromForm();
+            if (!config.appId || !config.appSecret) {
+                showToast('请填写 APP ID 和 APP Secret', 'error');
+                return;
+            }
+            saveConfig(config);
+            showToast('配置已保存', 'success');
+            closeSettings();
+            initDashboard();
+        });
+
+        // ===== Test Connection =====
+        testConnBtn.addEventListener('click', async () => {
+            const config = readConfigFromForm();
+            if (!config.appId || !config.appSecret || !config.baseToken) {
+                showToast('请先填写 APP ID、APP Secret 和 Base Token', 'error');
+                return;
+            }
+            const statusEl = $('#connectionStatus');
+            statusEl.innerHTML = '<div class="connection-status" style="background:var(--info-soft);color:var(--info);border:1px solid rgba(52,152,219,0.2);"><div class="dot" style="background:var(--info);"></div>正在测试连接...</div>';
+
+            try {
+                if (typeof FeishuAPI !== 'undefined' && FeishuAPI.testConnection) {
+                    const result = await FeishuAPI.testConnection(config);
+                    if (result.success) {
+                        statusEl.innerHTML = '<div class="connection-status success"><div class="dot"></div>连接成功！飞书 API 可正常访问。</div>';
+                        showToast('连接测试成功', 'success');
+                    } else {
+                        statusEl.innerHTML = '<div class="connection-status error"><div class="dot"></div>连接失败：' + (result.message || '请检查配置') + '</div>';
+                        showToast('连接测试失败', 'error');
+                    }
+                } else {
+                    // FeishuAPI not loaded — simulate test
+                    await new Promise(r => setTimeout(r, 1200));
+                    statusEl.innerHTML = '<div class="connection-status success"><div class="dot"></div>配置格式正确。（feishu-api.js 未加载，无法实际测试连接）</div>';
+                    showToast('配置已保存，但 feishu-api.js 未加载', 'warning');
+                }
+            } catch (err) {
+                statusEl.innerHTML = '<div class="connection-status error"><div class="dot"></div>连接失败：' + err.message + '</div>';
+                showToast('连接测试失败', 'error');
+            }
+        });
+
+        // ===== Toast =====
+        function showToast(message, type) {
+            type = type || 'success';
+            const icons = {
+                success: '<svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+                error: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>',
+                warning: '<svg viewBox="0 0 24 24"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>'
+            };
+            const toast = document.createElement('div');
+            toast.className = 'toast ' + type;
+            toast.innerHTML = (icons[type] || '') + '<span>' + message + '</span>';
+            toastContainer.appendChild(toast);
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => toast.classList.add('show'));
+            });
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => toast.remove(), 400);
+            }, 3500);
+        }
+
+        // ===== Init Dashboard =====
+        function initDashboard() {
+            const config = getConfig();
+            if (!config || !config.appId) {
+                setupWizard.style.display = '';
+                dashboardContent.style.display = 'none';
+                return;
+            }
+            setupWizard.style.display = 'none';
+            dashboardContent.style.display = '';
+            loadAllData();
+        }
+
+        // ===== Load Data =====
+        async function loadAllData() {
+            if (isLoading) return;
+            isLoading = true;
+            showLoading();
+
+            const config = getConfig();
+
+            // Try loading via FeishuAPI
+            if (typeof FeishuAPI !== 'undefined' && FeishuAPI.fetchTableData) {
+                try {
+                    const promises = Object.keys(TABS).map(async (tabKey) => {
+                        const tabDef = TABS[tabKey];
+                        const tableId = config[tabDef.tableId];
+                        if (!tableId) {
+                            allData[tabKey] = [];
+                            return;
+                        }
+                        try {
+                            const result = await FeishuAPI.fetchTableData(config, tableId);
+                            allData[tabKey] = (result && result.items) ? result.items : [];
+                        } catch (e) {
+                            console.warn('Failed to load ' + tabDef.name + ':', e);
+                            allData[tabKey] = [];
+                        }
+                    });
+                    await Promise.all(promises);
+                } catch (err) {
+                    console.error('Data load error:', err);
+                    showToast('数据加载失败: ' + err.message, 'error');
+                    allData = { assets: [], transactions: [], wash: [], hotels: [], inventory: [] };
+                }
+            } else {
+                // No FeishuAPI — show empty
+                allData = { assets: [], transactions: [], wash: [], hotels: [], inventory: [] };
+            }
+
+            isLoading = false;
+            updateSummaryCards();
+            switchTab(currentTab);
+        }
+
+        // ===== Summary Cards =====
+        function updateSummaryCards() {
+            const assets = allData.assets || [];
+            const washRecords = allData.wash || [];
+            const inventory = allData.inventory || [];
+
+            // Total assets
+            $('#statTotalAssets').textContent = assets.length.toLocaleString();
+            $('#statTotalAssetsSub').textContent = '已登记布草资产';
+
+            // In use
+            const inUseCount = assets.filter(a => a.status === '在用').length;
+            $('#statInUse').textContent = inUseCount.toLocaleString();
+            $('#statInUseSub').textContent = '占比 ' + (assets.length ? Math.round(inUseCount / assets.length * 100) : 0) + '%';
+
+            // Wash today
+            const today = new Date().toISOString().slice(0, 10);
+            const washToday = washRecords.filter(w => {
+                const d = w.washDate || '';
+                return d.startsWith(today);
+            }).length;
+            $('#statWashToday').textContent = washToday.toLocaleString();
+            $('#statWashTodaySub').textContent = '今日洗涤记录';
+
+            // Alerts
+            const alertCount = assets.filter(a => a.status === '预警').length +
+                               inventory.filter(i => i.diff && parseInt(i.diff) !== 0).length;
+            $('#statAlerts').textContent = alertCount.toLocaleString();
+            $('#statAlertsSub').textContent = alertCount > 0 ? '需要关注' : '暂无预警';
+
+            const alertCard = $('#alertCard');
+            if (alertCount > 0) {
+                alertCard.classList.add('alert-active');
+            } else {
+                alertCard.classList.remove('alert-active');
+            }
+        }
+
+        // ===== Tab Switching =====
+        function switchTab(tabKey) {
+            currentTab = tabKey;
+            currentPage = 1;
+            searchInput.value = '';
+
+            // Update tab buttons
+            $$('.tab-btn').forEach(btn => {
+                btn.classList.toggle('active', btn.dataset.tab === tabKey);
+            });
+
+            // Update filter options
+            const tabDef = TABS[tabKey];
+            filterSelect.innerHTML = '';
+            tabDef.filters.forEach(f => {
+                const opt = document.createElement('option');
+                opt.value = f.value;
+                opt.textContent = f.label;
+                filterSelect.appendChild(opt);
+            });
+
+            applyFilter();
+        }
+
+        $('#tabsNav').addEventListener('click', (e) => {
+            const btn = e.target.closest('.tab-btn');
+            if (!btn) return;
+            switchTab(btn.dataset.tab);
+        });
+
+        // ===== Search & Filter =====
+        function applyFilter() {
+            const tabDef = TABS[currentTab];
+            const data = allData[currentTab] || [];
+            const query = searchInput.value.trim().toLowerCase();
+            const filterVal = filterSelect.value;
+
+            filteredData = data.filter(row => {
+                // Filter by status
+                if (filterVal) {
+                    const statusKey = tabDef.keys[tabDef.columns.length > 4 ? 3 : (currentTab === 'transactions' ? 1 : tabDef.columns.length - 1)];
+                    if (row[statusKey] !== filterVal) return false;
+                }
+                // Search
+                if (query) {
+                    return tabDef.keys.some(key => {
+                        const val = (row[key] || '').toString().toLowerCase();
+                        return val.includes(query);
+                    });
+                }
+                return true;
+            });
+
+            currentPage = 1;
+            renderTable();
+        }
+
+        let searchDebounce;
+        searchInput.addEventListener('input', () => {
+            clearTimeout(searchDebounce);
+            searchDebounce = setTimeout(applyFilter, 250);
+        });
+
+        filterSelect.addEventListener('change', applyFilter);
+
+        // ===== Render Table =====
+        function renderTable() {
+            const tabDef = TABS[currentTab];
+            const data = filteredData;
+
+            if (isLoading) {
+                showLoading();
+                return;
+            }
+
+            if (data.length === 0) {
+                showEmpty();
+                return;
+            }
+
+            loadingState.style.display = 'none';
+            emptyState.style.display = 'none';
+            tableWrapper.style.display = '';
+
+            // Toolbar info
+            toolbarInfo.textContent = '共 ' + data.length + ' 条记录';
+
+            // Header
+            let headHtml = '<tr>';
+            tabDef.columns.forEach(col => {
+                headHtml += '<th>' + col + '</th>';
+            });
+            headHtml += '</tr>';
+            tableHead.innerHTML = headHtml;
+
+            // Pagination
+            const totalPages = Math.ceil(data.length / PAGE_SIZE);
+            if (currentPage > totalPages) currentPage = totalPages;
+            const startIdx = (currentPage - 1) * PAGE_SIZE;
+            const endIdx = Math.min(startIdx + PAGE_SIZE, data.length);
+            const pageData = data.slice(startIdx, endIdx);
+
+            // Body
+            let bodyHtml = '';
+            pageData.forEach(row => {
+                bodyHtml += '<tr>';
+                tabDef.keys.forEach((key, idx) => {
+                    const val = row[key] || '--';
+                    // Check if this is a status column
+                    const colName = tabDef.columns[idx];
+                    const isStatusCol = (colName === '状态' || colName === '类型');
+                    const statusKey = tabDef.statusMap && tabDef.statusMap[val];
+
+                    if (isStatusCol && statusKey) {
+                        bodyHtml += '<td><span class="status-badge ' + statusKey + '"><span class="dot"></span>' + val + '</span></td>';
+                    } else if (key === 'diff') {
+                        const numVal = parseInt(val);
+                        const cls = isNaN(numVal) || numVal === 0 ? '' : (numVal > 0 ? ' style="color:var(--danger);font-weight:600;"' : ' style="color:var(--tech);font-weight:600;"');
+                        const prefix = !isNaN(numVal) && numVal > 0 ? '+' : '';
+                        bodyHtml += '<td' + cls + '>' + prefix + val + '</td>';
+                    } else {
+                        bodyHtml += '<td>' + val + '</td>';
+                    }
+                });
+                bodyHtml += '</tr>';
+            });
+            tableBody.innerHTML = bodyHtml;
+
+            // Pagination controls
+            renderPagination(data.length, totalPages);
+        }
+
+        // ===== Pagination =====
+        function renderPagination(total, totalPages) {
+            if (totalPages <= 1) {
+                pagination.style.display = 'none';
+                return;
+            }
+            pagination.style.display = '';
+
+            const startIdx = (currentPage - 1) * PAGE_SIZE + 1;
+            const endIdx = Math.min(currentPage * PAGE_SIZE, total);
+            paginationInfo.textContent = '显示 ' + startIdx + '-' + endIdx + ' / 共 ' + total + ' 条';
+
+            let controlsHtml = '';
+            // Prev
+            controlsHtml += '<button class="page-btn" ' + (currentPage <= 1 ? 'disabled' : '') + ' data-page="prev"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>';
+
+            // Page numbers (show max 5)
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            if (endPage - startPage < 4) startPage = Math.max(1, endPage - 4);
+
+            for (let i = startPage; i <= endPage; i++) {
+                controlsHtml += '<button class="page-btn' + (i === currentPage ? ' active' : '') + '" data-page="' + i + '">' + i + '</button>';
+            }
+
+            // Next
+            controlsHtml += '<button class="page-btn" ' + (currentPage >= totalPages ? 'disabled' : '') + ' data-page="next"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>';
+
+            paginationControls.innerHTML = controlsHtml;
+        }
+
+        paginationControls.addEventListener('click', (e) => {
+            const btn = e.target.closest('.page-btn');
+            if (!btn || btn.disabled) return;
+            const page = btn.dataset.page;
+            if (page === 'prev') currentPage--;
+            else if (page === 'next') currentPage++;
+            else currentPage = parseInt(page);
+            renderTable();
+        });
+
+        // ===== Loading / Empty States =====
+        function showLoading() {
+            loadingState.style.display = '';
+            emptyState.style.display = 'none';
+            tableWrapper.style.display = 'none';
+            pagination.style.display = 'none';
+            toolbarInfo.textContent = '';
+        }
+
+        function showEmpty() {
+            loadingState.style.display = 'none';
+            emptyState.style.display = '';
+            tableWrapper.style.display = 'none';
+            pagination.style.display = 'none';
+            toolbarInfo.textContent = '共 0 条记录';
+        }
+
+        // ===== Export CSV =====
+        exportCsvBtn.addEventListener('click', () => {
+            const tabDef = TABS[currentTab];
+            const data = filteredData;
+            if (data.length === 0) {
+                showToast('当前没有可导出的数据', 'warning');
+                return;
+            }
+
+            // BOM for Excel UTF-8
+            let csv = '\uFEFF';
+            csv += tabDef.columns.join(',') + '\n';
+            data.forEach(row => {
+                const vals = tabDef.keys.map(key => {
+                    let val = (row[key] || '').toString();
+                    // Escape quotes and wrap if needed
+                    if (val.includes(',') || val.includes('"') || val.includes('\n')) {
+                        val = '"' + val.replace(/"/g, '""') + '"';
+                    }
+                    return val;
+                });
+                csv += vals.join(',') + '\n';
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = tabDef.name + '_' + new Date().toISOString().slice(0, 10) + '.csv';
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('已导出 ' + data.length + ' 条记录', 'success');
+        });
+
+        // ===== Refresh =====
+        refreshBtn.addEventListener('click', () => {
+            if (isLoading) return;
+            showToast('正在刷新数据...', 'success');
+            loadAllData();
+        });
+
+        // ===== Keyboard Shortcuts =====
+        document.addEventListener('keydown', (e) => {
+            // Escape to close settings
+            if (e.key === 'Escape') {
+                closeSettings();
+            }
+            // Ctrl+K to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+            }
+        });
+
+        // ===== Initialize =====
+        initDashboard();
+
+    })();
+    </script>
 </body>
 </html>
