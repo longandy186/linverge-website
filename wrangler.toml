@@ -6,6 +6,9 @@ compatibility_flags = ["nodejs_compat"]
 [observability]
 enabled = true
 
+workers_dev = false
+domains = ["linverge.com", "www.linverge.com", "rs.linverge.com"]
+
 [assets]
 directory = "."
 not_found_handling = "single-page-application"
