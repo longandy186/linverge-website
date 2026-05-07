@@ -1,5 +1,4 @@
 # Cloudflare Pages redirects
-# rs.linverge.com serves Serbian homepage directly
 
-# Ensure SPA routing works for all paths
-/* /index.html 200
+# SPA fallback - serve index.html for all non-file routes
+/*    /index.html   200
