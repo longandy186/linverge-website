@@ -1,0 +1,13 @@
+# Local environment
+.env
+.env.local
+.env.*.local
+
+# Cloudflare Wrangler
+.wrangler/
+
+# Git
+.git/
+
+# Node
+node_modules/
